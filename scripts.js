@@ -4,24 +4,16 @@ const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
 const effect1=document.querySelector('.but1');
+const effect2=document.querySelector('.but2');
+const effect3=document.querySelector('.but3');
+
 let choice=0;
-// const width = video.videoWidth;
-// const height = video.videoHeight;
-//   canvas.width = width;
-//   canvas.height = height;
 
 
 function getVideo() {
   navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(localMediaStream => {
       console.log(localMediaStream);
-    
-//  DEPRECIATION : 
-//       The following has been depreceated by major browsers as of Chrome and Firefox.
-//       video.src = window.URL.createObjectURL(localMediaStream);
-//       Please refer to these:
-//       Deprecated  - https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-//       Newer Syntax - https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject
       
       video.srcObject = localMediaStream;
       video.play();
@@ -36,19 +28,32 @@ function paintToCanvas() {
   const height = video.videoHeight;
   canvas.width = width;
   canvas.height = height;
+  let alp=false;
 
   return setInterval(() => {
     ctx.drawImage(video, 0, 0, width, height);
     // take the pixels out
     let pixels = ctx.getImageData(0, 0, width, height);
-    //effect1.addEventListener('click',redEffect);
+    //effect1.addEventListener('click',undead);
    // mess with them
    if(choice===1){
-    pixels = redEffect(pixels);
+    pixels = undead(pixels);
+    alp=true;
     }
+    else
+      if(choice===2){
+        pixels=acid(pixels);
+        alp=true;
+      }
+    else
+      if(choice===3){
+        pixels=aquamarine(pixels);
+        alp=false;
+      }
 
-    //pixels = rgbSplit(pixels);
-    // ctx.globalAlpha = 0.8;
+    if(alp){
+      ctx.globalAlpha = 0.8;
+    }
 
     // pixels = greenScreen(pixels);
     // put them back
@@ -70,58 +75,46 @@ function takePhoto() {
   strip.insertBefore(link, strip.firstChild);
 }
 
-function redEffect(pixels) {
+function undead(pixels) {
   //let pixels = ctx.getImageData(0, 0, width, height);
   for (let i = 0; i < pixels.data.length; i+=4) {
-    pixels.data[i + 0] = pixels.data[i + 0] + 200; // RED
-    pixels.data[i + 1] = pixels.data[i + 1] - 50; // GREEN
-    pixels.data[i + 2] = pixels.data[i + 2] * 0.5; // Blue
+    pixels.data[i -10] = pixels.data[i +0] *(205/255); // RED
+    pixels.data[i + 10] = pixels.data[i + 1]*(170/255); // GREEN
+    pixels.data[i + 2] = pixels.data[i +2] *(25/255); // Blue
   }
   // ctx.putImageData(pixels, 0, 0);
   return pixels;
 }
 
-function rgbSplit() {
+function aquamarine(pixels) {
+  //let pixels = ctx.getImageData(0, 0, width, height);
+  for (let i = 0; i < pixels.data.length; i+=4) {
+    pixels.data[i + 0] = pixels.data[i + 0]*(230/255); // RED
+    pixels.data[i - 10] = pixels.data[i + 1]*(175/255); // GREEN
+    pixels.data[i - 20] = pixels.data[i + 2]*(35/255); // Blue
+  }
+  // ctx.putImageData(pixels, 0, 0);
+  return pixels;
+}
+
+function acid(pixels) {
 
   for (let i = 0; i < pixels.data.length; i+=4) {
     pixels.data[i - 150] = pixels.data[i + 0]; // RED
-    pixels.data[i + 500] = pixels.data[i + 1]; // GREEN
-    pixels.data[i - 550] = pixels.data[i + 2]; // Blue
+    pixels.data[i + 300] = pixels.data[i + 1]; // GREEN
+    pixels.data[i - 450] = pixels.data[i + 2]; // Blue
   }
   return pixels;
 }
 
-function greenScreen(pixels) {
-  const levels = {};
 
-  document.querySelectorAll('.rgb input').forEach((input) => {
-    levels[input.name] = input.value;
-  });
-
-  for (i = 0; i < pixels.data.length; i = i + 4) {
-    red = pixels.data[i + 0];
-    green = pixels.data[i + 1];
-    blue = pixels.data[i + 2];
-    alpha = pixels.data[i + 3];
-
-    if (red >= levels.rmin
-      && green >= levels.gmin
-      && blue >= levels.bmin
-      && red <= levels.rmax
-      && green <= levels.gmax
-      && blue <= levels.bmax) {
-      // take it out!
-      pixels.data[i + 3] = 0;
-    }
-  }
-
-  return pixels;
-}
 
 getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
-// effect1.addEventListener('click',()=>setInterval(
-//   ()=> {choice=(choice!=1?1:0);},16));
 effect1.addEventListener('click',
   ()=> {choice=(choice!=1?1:0);});
+effect2.addEventListener('click',
+  ()=> {choice=(choice!=2?2:0);});
+effect3.addEventListener('click',
+  ()=> {choice=(choice!=3?3:0);});
