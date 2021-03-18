@@ -8,7 +8,7 @@ html {
 
 html {
   font-size: 10px;
-  background: #ffc600;
+  background: #fc4445;
 }
 
 .photobooth {
@@ -36,7 +36,25 @@ html {
   right: 20px;
   width:200px;
 }
+.but{
+  width: 20vw;
+    height: 10vw;
+    margin-left: 2vw;
+    margin-top: 2vw;
+    border-radius: 3vw;
+    background-color: #3feee6;
+    font-size:2vw;
+    outline: none;
+    box-shadow: 0 9px #999;
+}
 
+.but:hover {background-color: #55bcc9}
+
+.but:active {
+  background-color: #55bcc9;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 /*
   Strip!
 */
