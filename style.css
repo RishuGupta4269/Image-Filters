@@ -6,20 +6,22 @@ html {
   box-sizing: inherit;
 }
 
-html {
-  font-size: 10px;
-  background: #ff4646;
+
+body{
+  background-image:url("background.png"); 
+  background-color: white;
+  font-family: 'Righteous', cursive;
 }
 
 .photobooth {
   /*background: white;*/
-  max-width: 150rem;
+  width: 100%;
   margin: 2rem auto;
   border-radius: 2px;
   float: left;
   display: flex;
   flex-direction: row;
-  max-height: 100vh;
+  max-height: 90vh;
 }
 .controls{
   display: flex;
@@ -35,26 +37,30 @@ html {
 }
 
 .photo {
-  width: 100%;
-  border:1vw solid white;
+  width: 90%;
+  height:70%;
+  padding-top:0; 
+  border:1vw  solid rgba(125,230,0,0.5);
   border-radius:3px; 
   /*float: left;*/
 }
 
 .booth{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+ /*justify-content: center;*/
   margin-left: 2vw;
-  overflow: auto;
+  /*overflow: auto;*/
   flex-grow:1;
+  flex-wrap: wrap;
 }
 
 .player {
   /*position: absolute;*/
   top: 20px;
   right: 20px;
-  width:200px;
+  width:90%;
+  height :70%;
 }
 .but{
   width: 20vw;
@@ -62,30 +68,38 @@ html {
     margin-left: 2vw;
     margin-top: 2vw;
     border-radius: 3vw;
-    background-color: #ffb396;
+    background-color: #ffcc99;
     font-size:2.5vw;
     outline: none;
-    box-shadow: 0 9px #999;
+    box-shadow: 0 9px #888;
 }
 
-.but:hover {background-color: #}
 
 .but:active {
-  background-color: #ffcdA8;
+  background-color: #ffddAA;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 /*
   Strip!
 */
+.break{
+  flex-basis: 100%;
+  width:0;
+}
 
 .strip {
   padding: 2rem;
+  /*border: 2px solid white;*/
+  width: 90%;
+  height: 25%;
+  margin-top: 2.5%;
+  overflow-y: auto;
 }
 
 .strip img {
   width: 100px;
-  /*overflow-x: scroll;*/
+  overflow-x: scroll;
   padding: 0.8rem 0.8rem 2.5rem 0.8rem;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
   background: white;
